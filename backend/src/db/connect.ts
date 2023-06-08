@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+const uri = process.env.MONGO_URI || "";
+
 export const connectDB = () => {
-    mongoose.connect("URI_HERE").then(() => console.log("connected to DB"))
+    mongoose.set('strictQuery', true);
+    mongoose.connect(uri).then(() => console.log("connected to DB"))
 }
