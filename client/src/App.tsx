@@ -1,16 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from './main'
+import Layout from './Layout'
+import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom"
 
 const App = () => {
-
-  const user = useSelector((state: RootState) => state.user.value)
-  console.log(user)
-
   return (
-    <div>
-      <h1 className='text-red-500'>App</h1>
-    </div>
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Home />} />
+      </Route>
+    </Routes>
   )
 }
 
