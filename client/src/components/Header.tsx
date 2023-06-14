@@ -3,14 +3,25 @@ import logo from "../assets/images/logo.png";
 import SearchBox from './SearchBox';
 import { checkUser } from '../utils/utils';
 
-const Header = () => {
-  const [isUser, setIsUser] = useState<boolean>(checkUser());
+const Header: React.FC = () => {
+  const isUser: boolean = true;
+  const [search, setSearch] = useState<string>("");
+
+
+  const searchHandler = (): void => {
+    if (search.length > 0) {
+      console.log(search);
+      setSearch("");
+    } else {
+      console.log("empty seach box")
+    }
+  }
 
   return (
     <div className='w-[100vw] h-[2.2rem] bg-white flex items-center border-b-[1px] border-[#C9C9C9] justify-between px-5'>
       <div className='flex justify-center items-center gap-4'>
         <img src={logo} className='w-[20px]' />
-        <SearchBox />
+        <SearchBox value={search} setValue={setSearch} OnSearchHandler={searchHandler} />
       </div>
       {isUser ? <SignInBar /> : <LoggedInUserBar />}
     </div>
