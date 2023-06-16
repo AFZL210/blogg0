@@ -41,7 +41,11 @@ const UserSchema = new mongoose.Schema({
             required: false,
             ref: "Post"
         }
-    ]
+    ],
+    icon: {
+        type: String,
+        required: false
+    }
 }, {
     timestamps: true
 });

@@ -11,7 +11,7 @@ import postRoutes from "./routes/post_route";
 const PORT = process.env.BACKEND_PORT || 5000;
 
 app.use(cors({
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:5173",
     credentials: true
 }));
 app.use(express.json());
@@ -20,7 +20,7 @@ app.use(cookieParser());
 connectDB();
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-    res.send("Hi").status(200);
+    res.json("Hi").status(200);
 });
 
 app.use("/api/auth", authRoutes);
@@ -28,10 +28,10 @@ app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 
 
-app.use((err: {status: number, message: string}, req: Request, res: Response, next: NextFunction) => {
+app.use((err: { status: number, message: string }, req: Request, res: Response, next: NextFunction) => {
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "something went wrong";
-    
+
     return res.status(errorStatus).json(errorMessage);
 });
 

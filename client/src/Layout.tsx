@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
+import { RootState } from './main'
+import { useSelector } from 'react-redux'
 
 const Layout = () => {
 
     console.log(window.location.href.split("/")[3])
+    const route = useSelector((state: RootState) => state.route.value);
+    console.log(route.url)
 
     useEffect(() => {
         if (window.location.href.split("/")[3] === "login") {
