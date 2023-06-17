@@ -44,7 +44,8 @@ const UserSchema = new mongoose.Schema({
     ],
     icon: {
         type: String,
-        required: false
+        required: false,
+        default: "https://res.cloudinary.com/primeflix/image/upload/v1678206231/download_lhz0or.jpg"
     }
 }, {
     timestamps: true

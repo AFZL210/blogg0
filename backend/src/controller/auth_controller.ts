@@ -48,7 +48,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             _id: user._id,
         }, process.env.JWT_SECRET || "were-is-my-secret", { expiresIn: '740h' });
 
-        return res.cookie("accessToken", token, {
+        return res.cookie("token", token, {
             httpOnly: true
         }).status(200).json({ ...resData, token: token });
 
