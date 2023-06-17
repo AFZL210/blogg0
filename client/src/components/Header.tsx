@@ -8,10 +8,32 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import UserMenuCard from './settings/UserMenuCard';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
+import { RootState } from '../main';
+import { useDispatch } from 'react-redux';
+import { login, logout } from '../features/userReducer';
 
 const Header: React.FC = () => {
-  const isUser: boolean = true;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token: string | undefined = Cookies.get('accessToken');
+    if (!token || !localStorage.getItem("currentUser")) {
+      dispatch(logout());
+    } else {
+      const token: string | undefined = Cookies.get('accessToken');
+      const userData = {
+        ...JSON.parse(localStorage.getItem("currentUser") || ""),
+        token: token
+      }
+      dispatch(login(userData))
+    }
+  }, [])
+
   const [search, setSearch] = useState<string>("");
+  const user = useSelector((state: RootState) => state.user.value)
+  console.log(user)
 
 
   const searchHandler = (): void => {
@@ -26,10 +48,10 @@ const Header: React.FC = () => {
   return (
     <div className='w-[100vw] h-[3.8rem] bg-white flex items-center border-b-[1px] border-[#C9C9C9] justify-between px-5'>
       <div className='flex justify-center items-center gap-4'>
-        <img src={logo} className='w-[2.4rem]' />
+        <Link to={'/'}><img src={logo} className='w-[2.4rem]' /></Link>
         <SearchBox value={search} setValue={setSearch} OnSearchHandler={searchHandler} />
       </div>
-      {isUser ? <SignInBar /> : <LoggedInUserBar />}
+      {!user.loggedIn ? <SignInBar /> : <LoggedInUserBar />}
     </div>
   )
 }

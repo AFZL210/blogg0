@@ -10,6 +10,7 @@ const Register = () => {
     const [name, setName] = useState<string>("");
     const [file, setFile] = useState<any>("");
     const [password, setPassword] = useState<string>("");
+    const [message, setMessage] = useState<any>("");
 
     const registerHandler = async () => {
         if (!username || !email || !password || !name) return alert("please fill all the details");
@@ -23,16 +24,19 @@ const Register = () => {
                 file
             })
 
-            console.log(res)
+            setMessage(res.data);
         } catch (e) {
             const error = e as AxiosError;
-            console.log(error.response?.data)
+            setMessage(error.response?.data)
         }
     }
 
     return (
         <div className='w-[100vw] h-[90vh] flex items-center justify-center'>
             <div className='flex flex-col gap-4'>
+
+                <span className='text-center'>{message}</span>
+
                 <div className='flex flex-col gap-0'>
                     <span>username</span>
                     <input placeholder='enter username' value={username} type='text' onChange={(e) => setUsername(e.target.value)}
