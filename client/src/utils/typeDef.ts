@@ -1,3 +1,7 @@
+import { SvgIconTypeMap } from "@mui/material"
+import { OverridableComponent } from "@mui/material/OverridableComponent"
+import React from "react"
+
 export interface UserType {
     name: string,
     username: string,
@@ -16,4 +20,21 @@ export type SeachProps = {
     value: string,
     setValue: React.Dispatch<React.SetStateAction<string>>
     OnSearchHandler: (...args: any[]) => void
+}
+
+export type UserListItemProp = {
+    to: string,
+    text: string,
+    children: React.ReactNode
+}
+
+export type PostCardType = {
+    title: string,
+    cover: string,
+    summary: string,
+    author: string,
+    date: string,
+    likes: string,
+    authorProfile: string,
+    postID: string
 }

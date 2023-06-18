@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import logo from "../assets/images/logo.png";
 import SearchBox from './SearchBox';
 import ButtonMain from './Buttons/ButtonMain';
-import { checkUser } from '../utils/utils';
 import Avatar from '@mui/material/Avatar';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -19,6 +18,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const token: string | undefined = Cookies.get('accessToken');
+    console.log(Cookies.get('token'))
     if (!token || !localStorage.getItem("currentUser")) {
       dispatch(logout());
     } else {
@@ -85,7 +85,7 @@ const LoggedInUserBar = () => {
           <Avatar alt="Travis Howard" src="https://res.cloudinary.com/primeflix/image/upload/v1678206231/download_lhz0or.jpg" sx={{ width: "2.4rem", height: "2.4rem" }} />
           <KeyboardArrowDownIcon />
         </div>
-        <div className='absolute right-[18rem] top-[3.2rem]'>
+        <div className='absolute right-[13rem] top-[3.2rem]'>
           {showMenu && <UserMenuCard />}
         </div>
       </div>
