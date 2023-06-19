@@ -5,12 +5,13 @@ import { UserListItemProp } from '../../utils/typeDef'
 import Person3OutlinedIcon from '@mui/icons-material/Person3Outlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Cookies from 'js-cookie';
+import { newRequest } from '../../utils/createRequest';
 
 const UserMenuCard: React.FC = () => {
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     localStorage.removeItem("currentUser")
-    Cookies.remove("accessToken");
+    await newRequest.get("/api/auth/logout")
     window.location.reload();
   }
 

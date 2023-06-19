@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../main';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../features/userReducer';
+import { newRequest } from '../utils/createRequest';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();

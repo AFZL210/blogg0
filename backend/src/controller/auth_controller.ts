@@ -57,6 +57,6 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     }
 }
 
-export const validateUser = async (req: Request, res: Response) => {
-    res.json("validation successful").status(200);
+export const logout = async (req: Request, res: Response) => {
+    res.clearCookie("token").json({msg: "user logged out"}).status(200);
 }
