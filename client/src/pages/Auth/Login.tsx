@@ -24,8 +24,6 @@ const Login: React.FC = () => {
         username, password
       });
 
-      const token = res.data.token;
-      Cookies.set('accessToken', token);
       localStorage.setItem("currentUser", JSON.stringify(res.data));
       dispatch(login(res.data));
       setMessage("logged in")

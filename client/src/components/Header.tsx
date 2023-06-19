@@ -7,7 +7,6 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import UserMenuCard from './settings/UserMenuCard';
 import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 import { RootState } from '../main';
 import { useDispatch } from 'react-redux';
@@ -17,15 +16,11 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token: string | undefined = Cookies.get('accessToken');
-    console.log(Cookies.get('token'))
-    if (!token || !localStorage.getItem("currentUser")) {
+    if (!localStorage.getItem("currentUser")) {
       dispatch(logout());
     } else {
-      const token: string | undefined = Cookies.get('accessToken');
       const userData = {
-        ...JSON.parse(localStorage.getItem("currentUser") || ""),
-        token: token
+        ...JSON.parse(localStorage.getItem("currentUser") || "")
       }
       dispatch(login(userData))
     }

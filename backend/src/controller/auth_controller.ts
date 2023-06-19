@@ -56,3 +56,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         return next(e);
     }
 }
+
+export const validateUser = async (req: Request, res: Response) => {
+    res.json("validation successful").status(200);
+}
