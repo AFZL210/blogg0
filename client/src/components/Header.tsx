@@ -29,8 +29,6 @@ const Header: React.FC = () => {
 
   const [search, setSearch] = useState<string>("");
   const user = useSelector((state: RootState) => state.user.value)
-  console.log(user)
-
 
   const searchHandler = (): void => {
     if (search.length > 0) {

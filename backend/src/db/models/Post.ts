@@ -9,7 +9,13 @@ const PostSchema = new mongoose.Schema({
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    tags: [
+        {
+            type: String,
+            required: false
+        }
+    ]
 }, {
     timestamps: true
 });

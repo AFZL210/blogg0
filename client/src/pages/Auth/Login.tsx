@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { newRequest } from '../../utils/createRequest';
 import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
 import { login } from '../../features/userReducer';
 
 
@@ -36,8 +35,7 @@ const Login: React.FC = () => {
   }
 
   useEffect(() => {
-    const token: string | undefined = Cookies.get('accessToken');
-    if (token && localStorage.getItem("currentUser")) navigate("/")
+    if (localStorage.getItem("currentUser")) navigate("/")
   }, [])
 
   return (

@@ -3,13 +3,7 @@ import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
 import User from "../db/models/UserMode";
 import { createError } from "../utils/createError";
-
-type UserType = {
-    name: string,
-    username: string,
-    password: string,
-    email: string
-}
+import { UserType } from "../utils/typeDefs";
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
