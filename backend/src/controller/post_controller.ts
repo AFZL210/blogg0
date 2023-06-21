@@ -53,7 +53,6 @@ export const deletePost = async (req: Request, res: Response, next: NextFunction
 export const likePost = async (req: Request, res: Response, next: NextFunction) => {
     const postId = req.params.postId;
     const post = await Post.findOne({ _id: postId });
-    const likes: number = post?.likes || 0;
     let likedBy = post?.likedBy;
     const userId = new mongoose.Types.ObjectId(req.params.userId);
     if (!post) return res.status(404).send("post not found");
@@ -64,14 +63,14 @@ export const likePost = async (req: Request, res: Response, next: NextFunction) 
         if (!isLiked) {
             likedBy?.push(userId);
             await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 }, $push: { likedBy: userId } }, { new: false });
-            res.send('liked post')
+            res.send('liked post');
         } else {
             likedBy = likedBy?.filter(e => e !== userId);
             await Post.findByIdAndUpdate(postId, { $inc: { likes: -1 }, $pull: { likedBy: userId } }, { new: false });
-            res.send("unliked post")
+            res.send("unliked post");
         }
-    } catch {
-
+    } catch (e) {
+        return next(createError(403, "error liking post"));
     }
 }
 
