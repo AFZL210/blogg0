@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express, { Application, Request, Response, NextFunction } from "express"
+import express, { Application, Request, Response, NextFunction } from "express";
 const app = express();
-import cors from "cors"
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./db/connect";
 import authRoutes from "./routes/auth_route";
@@ -11,7 +11,7 @@ import postRoutes from "./routes/post_route";
 const PORT = process.env.BACKEND_PORT || 5000;
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true
 }));
 app.use(express.json());
@@ -36,5 +36,5 @@ app.use((err: { status: number, message: string }, req: Request, res: Response, 
 });
 
 app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`)
+    console.log(`server is running on port ${PORT}`);
 });

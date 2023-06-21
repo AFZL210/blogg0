@@ -15,6 +15,12 @@ const PostSchema = new mongoose.Schema({
             type: String,
             required: false
         }
+    ],
+    likedBy: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ]
 }, {
     timestamps: true

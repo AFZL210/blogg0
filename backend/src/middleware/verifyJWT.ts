@@ -11,8 +11,8 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         jwt.verify(token, JWT_SECRET, (err: any, payload: any) => {
             if (payload === undefined) return next(createError(403, "invalid token"));
             if (err) return next(createError(403, "invalid token"));
-        
-            if(payload._id !== req.params.userId) return next(createError(403, "invalid token"));
+
+            if (payload._id !== req.params.userId) return next(createError(403, "invalid token"));
             next();
         })
     }
