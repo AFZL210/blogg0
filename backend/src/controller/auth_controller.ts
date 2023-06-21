@@ -3,13 +3,7 @@ import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
 import User from "../db/models/UserMode";
 import { createError } from "../utils/createError";
-
-type UserType = {
-    name: string,
-    username: string,
-    password: string,
-    email: string
-}
+import { UserType } from "../utils/typeDefs";
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -48,11 +42,15 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             _id: user._id,
         }, process.env.JWT_SECRET || "were-is-my-secret", { expiresIn: '740h' });
 
-        return res.cookie("accessToken", token, {
+        return res.cookie("token", token, {
             httpOnly: true
         }).status(200).json({ ...resData, token: token });
 
     } catch (e) {
         return next(e);
     }
+}
+
+export const logout = async (req: Request, res: Response) => {
+    res.clearCookie("token").json({msg: "user logged out"}).status(200);
 }

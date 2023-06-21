@@ -6,10 +6,12 @@ import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import userReducer from './features/userReducer.ts'
+import routeReducer from './features/routeReducer.ts'
 
 const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    route: routeReducer,
   }
 });
 
