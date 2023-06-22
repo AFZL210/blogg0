@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
-import User from "../db/models/UserMode";
+import User from "../db/models/UserModel";
 import { createError } from "../utils/createError";
 import { UserType } from "../utils/typeDefs";
 
