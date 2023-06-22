@@ -5,6 +5,8 @@ import PageNotFound from './pages/Error/PageNotFound';
 import { Routes, Route } from "react-router-dom"
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import PostPage from './pages/Post/PostPage';
+import CreatePost from './pages/Post/CreatePost';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +15,8 @@ const App: React.FC = () => {
         <Route index element={<Home />} />
         <Route path='login' element={<Login />} />
         <Route path='create-account' element={<Register />} />
+        <Route path='/post/:postId' element={<PostPage />} />
+        <Route path='/create-new-post' element={<CreatePost />} />
         <Route path='*' element={<PageNotFound />} />
       </Route>
     </Routes>

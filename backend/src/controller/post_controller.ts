@@ -31,7 +31,7 @@ export const newPost = async (req: Request, res: Response, next: NextFunction) =
     const userId = req.params.userId;
 
     try {
-        const newPost = await Post.create(postData);
+        const newPost = await Post.create({...postData, author: userId});
         console.log(newPost);
         (await newPost).save();
         await User.findByIdAndUpdate(userId, { $push: { myPosts: newPost._id } }, { new: false });

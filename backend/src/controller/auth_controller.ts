@@ -52,5 +52,5 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 }
 
 export const logout = async (req: Request, res: Response) => {
-    res.clearCookie("token").json({msg: "user logged out"}).status(200);
+    res.clearCookie("token").json({ msg: "user logged out" }).status(200);
 }
