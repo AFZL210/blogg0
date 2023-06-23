@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
-import User from "../db/models/UserMode";
+import User from "../db/models/UserModel";
 import { createError } from "../utils/createError";
 import { UserType } from "../utils/typeDefs";
 
@@ -52,5 +52,5 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 }
 
 export const logout = async (req: Request, res: Response) => {
-    res.clearCookie("token").json({msg: "user logged out"}).status(200);
+    res.clearCookie("token").json({ msg: "user logged out" }).status(200);
 }

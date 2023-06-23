@@ -1,5 +1,6 @@
-import e, { Request, Response, NextFunction } from "express";
-import Post from "../db/models/Post";
+import { Request, Response, NextFunction } from "express";
+import Post from "../db/models/PostModel";
+import User from "../db/models/UserModel";
 import { createError } from "../utils/createError";
 import { PostType } from "../utils/typeDefs";
 import mongoose from "mongoose";
@@ -27,11 +28,13 @@ export const getPost = async (req: Request, res: Response, next: NextFunction) =
 
 export const newPost = async (req: Request, res: Response, next: NextFunction) => {
     const postData: PostType = { ...req.body, likes: 0 };
+    const userId = req.params.userId;
 
     try {
-        const newPost = await Post.create(postData);
-        console.log(newPost);
+        const newPost = await Post.create({ ...postData, author: userId });
+
         (await newPost).save();
+        await User.findByIdAndUpdate(userId, { $push: { myPosts: newPost._id } }, { new: false });
         return next(createError(200, "created post successfully!"))
     } catch (e) {
         console.log(e)
@@ -41,9 +44,11 @@ export const newPost = async (req: Request, res: Response, next: NextFunction) =
 
 export const deletePost = async (req: Request, res: Response, next: NextFunction) => {
     const postId = req.params.postId;
+    const userId = req.params.userId;
 
     try {
         await Post.findByIdAndDelete(postId);
+        await User.findByIdAndUpdate(userId, { $push: { myPosts: postId } }, { new: false });
         return res.status(200).json({ msg: "deleted post" });
     } catch (e) {
         return next(createError(403, "error deleting post"));

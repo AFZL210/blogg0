@@ -1,21 +1,17 @@
 import React from 'react'
 import { PostCardType } from '../../utils/typeDef'
 import Avatar from '@mui/material/Avatar';
-import { Link } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { trimText } from '../../utils/utils';
 
 const PostCard: React.FC<PostCardType> = ({ title, author, cover, date, likes, summary, authorProfile, postID }) => {
 
-  const post: PostCardType = {
-    title, author, authorProfile, cover, date, likes, summary, postID
-  }
-
   return (
-    <div className='w-[100%] flex flex-col gap-2'>
+    <div className='w-[100%] flex flex-col gap-2 cursor-pointer h-[12rem] max-h-[20vh]'>
       <div className='flex justify-between'>
         <div className='w-[100%] flex gap-5 items-center justify-between'>
           <div className='flex items-center gap-2'>
-            <Avatar alt="Travis Howard" src="https://res.cloudinary.com/primeflix/image/upload/v1678206231/download_lhz0or.jpg" sx={{ width: "2.2rem", height: "2.2rem" }} />
+            <Avatar alt="Travis Howard" src={authorProfile} sx={{ width: "2.2rem", height: "2.2rem" }} />
             <span className='text-[.98rem] text-black'>{author}</span>
           </div>
           <div className='flex gap-5'>
@@ -29,11 +25,12 @@ const PostCard: React.FC<PostCardType> = ({ title, author, cover, date, likes, s
       </div>
 
       <div className='w-[100%] flex justify-between'>
-        <div className='flex flex-col gap-2 w-[60%]'>
+        <div className='flex flex-col gap-2 w-[60%] md:w-[65vw]'>
           <h1 className='font-bold text-[0.98rem]'>{title}</h1>
-          <span className='text-[0.75rem]'>{summary}</span>
+          <span className='text-[0.75rem] hidden md:flex'>{trimText(summary, 30, 250)}..</span>
+          <span className='text-[0.75rem] flex md:hidden'>{trimText(summary, 30, 90)}...</span>
         </div>
-        <div className='w-[40%]'>
+        <div className='w-[12rem] h-[12rem] md:w-[25rem] md:h-[25rem]'>
           <img src={cover} />
         </div>
       </div>

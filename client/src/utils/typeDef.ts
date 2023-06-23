@@ -38,3 +38,8 @@ export type PostCardType = {
     authorProfile: string,
     postID: string
 }
+
+export type Editor = {
+    content: string,
+    setContent: React.Dispatch<React.SetStateAction<string>>
+}
