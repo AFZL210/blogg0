@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   }, [selectedTag])
 
   return (
-    <div className='w-[100vw] h-[90vh] flex flex-col items-center'>
+    <div className='w-[100vw] h-[90vh] flex flex-col items-center overflow-x-hidden'>
       <div className='mt-5 flex gap-4'>
         <Link to="/"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Top Posts" ? "#fafafa" : "transparent" }} onClick={(e) => setSelectedTag("none")}>Top Posts</span></Link>
         <Link to="/?tag=tech"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Tech" ? "#fafafa" : "transparent" }} onClick={(e) => setSelectedTag("tech")}>Tech</span></Link>
@@ -37,8 +37,8 @@ const Home: React.FC = () => {
       {loading ? <div>
         <LineWaveLoader />
       </div> : <div>
-        <div className='mt-10 w-[100%] flex flex-col items-center'>
-          {posts.map((post: any) =><div key={post._id} className='w-[90%] md:w-[30%]'><Link to={`/post/${post._id}`} ><PostCard author={post.author.name} authorProfile={post.author.icon} cover='https://res.cloudinary.com/primeflix/image/upload/v1687082487/reactjs-benefits_xt3qch.jpg' date='22-02-2023' likes='23' postID='23232' summary='best tut' title='Welcome to my blog' />
+        <div className='mt-10 w-[100%] flex flex-col items-center gap-8'>
+          {posts.map((post: any) => <div key={post._id} className='w-[90%] md:w-[40%]'><Link to={`/post/${post._id}`} ><PostCard author={post.author.name} authorProfile={post.author.icon} cover={post.cover} date={post.updatedAt.substring(0, 10)} likes={post.likes} postID={post._id} summary={post.summary} title={post.title} />
           </Link></div>)}
         </div>
       </div>}

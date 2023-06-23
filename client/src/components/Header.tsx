@@ -32,7 +32,6 @@ const Header: React.FC = () => {
 
   const searchHandler = (): void => {
     if (search.length > 0) {
-      console.log(search);
       setSearch("");
     } else {
       console.log("empty seach box")

@@ -4,8 +4,6 @@ import LineWaveLoader from '../../utils/Loaders';
 import { useNavigate } from 'react-router-dom';
 import { upload } from '../../utils/utils';
 import { newRequest } from '../../utils/createRequest';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../main';
 
 const CreatePost: React.FC = () => {
 
@@ -15,22 +13,32 @@ const CreatePost: React.FC = () => {
     const [summary, setSummary] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [fileUrl, setFileUrl] = useState<string>("");
+    const [tags, setTags] = useState<string[]>([]);
+    const tagsOptions = ["tech", "coding", "life-style"];
+
+    const updateTag = (tag: string) => {
+        if (tags.includes(tag)) {
+            const newTags = tags.filter((t) => { return t !== tag });
+            setTags(newTags);
+        } else {
+            setTags([...tags, tag]);
+        }
+    }
+
     const id = JSON.parse(localStorage.getItem("currentUser") || "")._id;
 
     const postArticle = async () => {
         if (!content || !title || !summary) return alert("please fill all the fields");
         if (file !== null) {
-            const res = await upload(file);
-            setFileUrl(res);
+            const resData = await upload(file);
+            const cover = resData.data.url;
+            const newPost = { title, summary, content, cover, tags:[] };
+            const res = await newRequest.post(`/api/post/new-post/${id}`, newPost);
+            alert(res.data);
+            navigate("/");
+        } else {
+            return alert("upload cover");
         }
-
-        const newPost = { title, summary, content, cover: fileUrl, tags: [] }
-
-        const res = await newRequest.post(`/api/post/new-post/${id}`, newPost);
-
-        navigate("/")
-
     }
 
     useEffect(() => {
@@ -60,6 +68,14 @@ const CreatePost: React.FC = () => {
                                 if (e.target.files != null) setFile(e.target.files[0]);
                             }} />
                         </div>
+
+                        <div className='flex flex-col gap-1'>
+                            <span>Add Tags</span>
+                            <div className='flex gap-4'>
+                                {tagsOptions.map((tag: any) => <div onClick={() => updateTag(tag)} key={tag} className='px-2 rounded-full cursor-pointer' style={{ backgroundColor: tags.includes(tag) ? "#F4D7D7" : "transparent" }}>{tag}</div>)}
+                            </div>
+                        </div>
+
 
                         <button className='hidden md:flex rounded-full bg-black flex items-center justify-center h-6 w-[80%] mx-0 mt-5' onClick={postArticle}>
                             <span className='text-white text-[.6rem] font-bold'>POST</span>
