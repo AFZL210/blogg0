@@ -4,7 +4,7 @@ import Avatar from '@mui/material/Avatar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { trimText } from '../../utils/utils';
 
-const PostCard: React.FC<PostCardType> = ({ title, author, cover, date, likes, summary, authorProfile, postID }) => {
+const PostCard: React.FC<PostCardType> = ({ title, author, cover, date, likes, summary, authorProfile }) => {
 
   return (
     <div className='w-[100%] flex flex-col gap-2 cursor-pointer h-[12rem] max-h-[20vh]'>
@@ -27,8 +27,8 @@ const PostCard: React.FC<PostCardType> = ({ title, author, cover, date, likes, s
       <div className='w-[100%] flex justify-between'>
         <div className='flex flex-col gap-2 w-[60%] md:w-[65vw]'>
           <h1 className='font-bold text-[0.98rem]'>{title}</h1>
-          <span className='text-[0.75rem] hidden md:flex'>{trimText(summary, 30, 250)}..</span>
-          <span className='text-[0.75rem] flex md:hidden'>{trimText(summary, 30, 90)}...</span>
+          <span className='text-[0.75rem] hidden md:flex'>{trimText(summary, 250)}..</span>
+          <span className='text-[0.75rem] flex md:hidden'>{trimText(summary, 80)}...</span>
         </div>
         <div className='w-[12rem] h-[12rem] md:w-[25rem] md:h-[25rem]'>
           <img src={cover} />

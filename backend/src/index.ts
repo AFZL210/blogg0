@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 connectDB();
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
+app.get("/test", (req: Request, res: Response, next: NextFunction) => {
     res.json("Hi").status(200);
 });
 
