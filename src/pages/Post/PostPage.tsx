@@ -14,6 +14,7 @@ const PostPage: React.FC = () => {
   const [liked, setLikes] = useState<boolean>(false);
 
   const getPost = async () => {
+    setLikes(false);
     const postData = await newRequest.get(`/api/post/get-post/${postId}`);
     setPost(postData.data);
   }

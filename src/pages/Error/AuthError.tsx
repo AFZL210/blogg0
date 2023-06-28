@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AuthError = () => {
+const AuthError: React.FC = () => {
   return (
     <div>AuthError</div>
   )

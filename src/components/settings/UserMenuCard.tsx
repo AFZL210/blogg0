@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { UserListItemProp } from '../../utils/typeDef'
 import Person3OutlinedIcon from '@mui/icons-material/Person3Outlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Cookies from 'js-cookie';
 import { newRequest } from '../../utils/createRequest';
 
 const UserMenuCard: React.FC = () => {
