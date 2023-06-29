@@ -35,7 +35,7 @@ const Login: React.FC = () => {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("currentUser")) navigate("/")
+    if (localStorage.getItem("currentUser")) navigate("/");
   }, [])
 
   return (

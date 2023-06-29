@@ -4,8 +4,9 @@ const JWT_SECRET = process.env.JWT_SECRET || "";
 import { createError } from "../utils/createError";
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.token;
-    if (!token) return next(createError(403, "you are not authenticated"));
+    const token = req.headers.authorization?.split(" ")[1];
+    console.log(token)
+    if (!token || token.length === 0) return next(createError(403, "you are not authenticated"));
 
     else {
         jwt.verify(token, JWT_SECRET, (err: any, payload: any) => {
