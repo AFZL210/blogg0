@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { newRequest } from '../utils/createRequest'
 import { useQuery } from '../utils/queryHook'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PostCard from '../components/Post/PostCard'
 import LineWaveLoader from '../utils/Loaders'
 
@@ -28,10 +28,10 @@ const Home: React.FC = () => {
   return (
     <div className='w-[100vw] h-[90vh] flex flex-col items-center overflow-x-hidden'>
       <div className='mt-5 flex gap-4'>
-        <Link to="/"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Top Posts" ? "#fafafa" : "transparent" }} onClick={(e) => setSelectedTag("none")}>Top Posts</span></Link>
-        <Link to="/?tag=tech"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Tech" ? "#fafafa" : "transparent" }} onClick={(e) => setSelectedTag("tech")}>Tech</span></Link>
-        <Link to="/?tag=coding"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Coding" ? "#fafafa" : "transparent" }} onClick={(e) => setSelectedTag("coding")}>Coding</span></Link>
-        <Link to="/?tag=life-style"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Life Style" ? "#fafafa" : "transparent" }} onClick={(e) => setSelectedTag("life-style")}>Lifestyle</span></Link>
+        <Link to="/"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Top Posts" ? "#fafafa" : "transparent" }} onClick={() => setSelectedTag("none")}>Top Posts</span></Link>
+        <Link to="/?tag=tech"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Tech" ? "#fafafa" : "transparent" }} onClick={() => setSelectedTag("tech")}>Tech</span></Link>
+        <Link to="/?tag=coding"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Coding" ? "#fafafa" : "transparent" }} onClick={() => setSelectedTag("coding")}>Coding</span></Link>
+        <Link to="/?tag=life-style"><span className='h-fit rounded-full px-4 cursor-pointer' style={{ backgroundColor: selectedTag === "Life Style" ? "#fafafa" : "transparent" }} onClick={() => setSelectedTag("life-style")}>Lifestyle</span></Link>
       </div>
 
       {loading ? <div>

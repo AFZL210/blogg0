@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { AxiosError } from 'axios';
 import { newRequest } from "../../utils/createRequest";
-import { upload } from '../../utils/cloudinary';
 
-const Register = () => {
+const Register: React.FC = () => {
 
     const [username, setUsername] = useState<string>("");
     const [email, setEmail] = useState<string>("");
