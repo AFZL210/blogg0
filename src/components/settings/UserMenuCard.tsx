@@ -9,8 +9,9 @@ import { newRequest } from '../../utils/createRequest';
 const UserMenuCard: React.FC = () => {
 
   const logoutHandler = async () => {
-    localStorage.removeItem("currentUser")
-    await newRequest.get("/api/auth/logout")
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("token");
+    await newRequest.get("/api/auth/logout");
     window.location.reload();
   }
 
