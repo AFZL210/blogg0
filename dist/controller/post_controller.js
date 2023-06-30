@@ -39,7 +39,6 @@ const newPost = async (req, res, next) => {
         return next((0, createError_1.createError)(200, "created post successfully!"));
     }
     catch (e) {
-        console.log(e);
         return next((0, createError_1.createError)(403, "error creating new post"));
     }
 };

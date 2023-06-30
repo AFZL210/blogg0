@@ -9,7 +9,6 @@ const JWT_SECRET = process.env.JWT_SECRET || "";
 const createError_1 = require("../utils/createError");
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
-    console.log(token);
     if (!token || token.length === 0)
         return next((0, createError_1.createError)(403, "you are not authenticated"));
     else {

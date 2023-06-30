@@ -3,10 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.followUser = exports.getUserData = void 0;
+exports.validateUser = exports.deleteUser = exports.updateUser = exports.followUser = exports.getUserData = void 0;
 const UserModel_1 = __importDefault(require("../db/models/UserModel"));
 const createError_1 = require("../utils/createError");
 const mongoose_1 = __importDefault(require("mongoose"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const JWT_SECRET = process.env.JWT_SECRET || "";
 const getUserData = async (req, res, next) => {
     const userId = req.params.userId;
     try {
@@ -66,3 +68,20 @@ const deleteUser = async (req, res, next) => {
     }
 };
 exports.deleteUser = deleteUser;
+const validateUser = async (req, res, next) => {
+    const { _id, token } = req.body;
+    if (!token || token.length === 0)
+        return next((0, createError_1.createError)(403, "you are not authenticated"));
+    else {
+        jsonwebtoken_1.default.verify(token, JWT_SECRET, (err, payload) => {
+            if (payload === undefined)
+                return next((0, createError_1.createError)(403, "invalid token"));
+            if (err)
+                return next((0, createError_1.createError)(403, "invalid token"));
+            if (payload._id !== _id)
+                return next((0, createError_1.createError)(403, "invalid token"));
+            res.status(200).json({ msg: "logged in" });
+        });
+    }
+};
+exports.validateUser = validateUser;

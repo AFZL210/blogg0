@@ -8,6 +8,7 @@ const verifyJWT_1 = require("../middleware/verifyJWT");
 const user_controller_1 = require("../controller/user_controller");
 const router = express_1.default.Router();
 router.get("/user-data/:userId", user_controller_1.getUserData);
+router.post("/user/validate", user_controller_1.validateUser);
 router.patch("/user-update/:userId", verifyJWT_1.verifyToken, user_controller_1.updateUser);
 router.post("/user-follow/:userId/:followId", verifyJWT_1.verifyToken, user_controller_1.followUser);
 router.post("/user-delete/:userId", verifyJWT_1.verifyToken, user_controller_1.deleteUser);
