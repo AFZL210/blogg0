@@ -6,7 +6,8 @@ export interface UserType {
     password: string,
     email: string,
     token: string,
-    loggedIn: boolean
+    loggedIn: boolean,
+    icon: string
 }
 
 export type AppContextType = {

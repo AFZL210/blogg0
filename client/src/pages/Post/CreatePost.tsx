@@ -4,9 +4,14 @@ import LineWaveLoader from '../../utils/Loaders';
 import { useNavigate } from 'react-router-dom';
 import { upload } from '../../utils/utils';
 import { newRequest } from '../../utils/createRequest';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../main';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/userReducer';
 
 const CreatePost: React.FC = () => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [content, setContent] = useState<string>("");
     const [title, setTitle] = useState<string>("");
@@ -15,6 +20,14 @@ const CreatePost: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [tags, setTags] = useState<string[]>([]);
     const tagsOptions = ["tech", "coding", "life-style"];
+    const user = useSelector((state: RootState) => state.user.value);
+
+    if (user.token === "") {
+        alert("user logged out for some reason");
+        localStorage.removeItem("currentUser");
+        dispatch(logout);
+        navigate("/");
+    }
 
     const updateTag = (tag: string) => {
         if (tags.includes(tag)) {
@@ -32,8 +45,12 @@ const CreatePost: React.FC = () => {
         if (file !== null) {
             const resData = await upload(file);
             const cover = resData.data.url;
-            const newPost = { title, summary, content, cover, tags:[] };
-            const res = await newRequest.post(`/api/post/new-post/${id}`, newPost);
+            const newPost = { title, summary, content, cover, tags: [] };
+            const res = await newRequest.post(`/api/post/new-post/${id}`, newPost, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
             alert(res.data);
             navigate("/");
         } else {

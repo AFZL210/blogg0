@@ -7,7 +7,4 @@ const d = JSON.parse(userData);
 export const newRequest = axios.create({
     baseURL: BACKEND_URL,
     withCredentials: true,
-    headers: {
-        Authorization: `Bearer ${d.token}`
-    }
 })

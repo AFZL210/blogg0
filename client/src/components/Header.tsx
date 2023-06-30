@@ -11,9 +11,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../main';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../features/userReducer';
+import { newRequest } from '../utils/createRequest';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.value);
+  const [search, setSearch] = useState<string>("");
+
+  const validateUser = async (id: string, token: string) => {
+    const res = await newRequest.post("/api/user/user/validate", {
+      _id: id, token: token
+    });
+
+    return res.data;
+  }
 
   useEffect(() => {
     if (!localStorage.getItem("currentUser")) {
@@ -22,18 +33,29 @@ const Header: React.FC = () => {
       const userData = {
         ...JSON.parse(localStorage.getItem("currentUser") || "")
       }
-      dispatch(login(userData))
+
+      if (userData._id) {
+        validateUser(userData._id, userData.token).then(() => {
+          dispatch(login(userData));
+        }).catch((e) => {
+          console.log(e);
+          alert("logged out user");
+          localStorage.removeItem("currentUser");
+        });
+      } else {
+        alert("logged out user");
+        dispatch(logout());
+        localStorage.removeItem("currentUser");
+      }
     }
   }, [])
 
-  const [search, setSearch] = useState<string>("");
-  const user = useSelector((state: RootState) => state.user.value)
 
   const searchHandler = (): void => {
     if (search.length > 0) {
       setSearch("");
     } else {
-      console.log("empty seach box")
+      console.log("empty seach box");
     }
   }
 
@@ -61,6 +83,7 @@ const SignInBar = () => {
 
 const LoggedInUserBar = () => {
 
+  const user = useSelector((state: RootState) => state.user.value);
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   return (
@@ -74,7 +97,7 @@ const LoggedInUserBar = () => {
 
       <div className='relative cursor-pointer'>
         <div onClick={() => setShowMenu(!showMenu)} className='flex items-center justify-between gap-1' >
-          <Avatar alt="Travis Howard" src="https://res.cloudinary.com/primeflix/image/upload/v1678206231/download_lhz0or.jpg" sx={{ width: "2.4rem", height: "2.4rem" }} />
+          <Avatar alt="Travis Howard" src={user.icon} sx={{ width: "2.4rem", height: "2.4rem" }} />
           <KeyboardArrowDownIcon />
         </div>
         <div className='absolute right-[13rem] top-[3.2rem]'>
