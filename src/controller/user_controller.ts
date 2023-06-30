@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import User from "../db/models/UserModel";
 import { createError } from "../utils/createError";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+const JWT_SECRET = process.env.JWT_SECRET || "";
 
 export const getUserData = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
@@ -65,5 +67,21 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     return res.status(200).json({ msg: "delted user" });
   } catch (e) {
     return next(createError(403, "error deleting user"));
+  }
+}
+
+
+export const validateUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { _id, token } = req.body;
+  if (!token || token.length === 0) return next(createError(403, "you are not authenticated"));
+
+  else {
+    jwt.verify(token, JWT_SECRET, (err: any, payload: any) => {
+      if (payload === undefined) return next(createError(403, "invalid token"));
+      if (err) return next(createError(403, "invalid token"));
+
+      if (payload._id !== _id) return next(createError(403, "invalid token"));
+      res.status(200).json({ msg: "logged in" })
+    })
   }
 }
