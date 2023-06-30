@@ -7,6 +7,7 @@ const initialState: UserType = {
     password: "",
     token: "",
     username: "",
+    icon: "",
     loggedIn: false
 }
 

@@ -37,7 +37,6 @@ export const newPost = async (req: Request, res: Response, next: NextFunction) =
         await User.findByIdAndUpdate(userId, { $push: { myPosts: newPost._id } }, { new: false });
         return next(createError(200, "created post successfully!"))
     } catch (e) {
-        console.log(e)
         return next(createError(403, "error creating new post"));
     }
 }
