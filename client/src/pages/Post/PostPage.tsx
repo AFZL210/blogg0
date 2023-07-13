@@ -13,6 +13,8 @@ const PostPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [post, setPost] = useState<any>(null);
   const [liked, setLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(0);
+  const [followed, setFollowed] = useState<boolean>(false);
   let userId: any = "";
   let token: any = "";
   const check = localStorage.getItem("currentUser");
@@ -27,7 +29,6 @@ const PostPage: React.FC = () => {
   }
 
   const likePost = async () => {
-    console.log("like post button clicked");
     if (check !== null && userId) {
 
       const res = await newRequest.post(`/api/post/like-post/${userId}/${postId}`, {}, {
@@ -36,11 +37,32 @@ const PostPage: React.FC = () => {
         }
       });
 
+      const resLikes = await getPost()
+      setLikes(resLikes.likes);
       if (res.data == "unliked post") setLiked(false);
       else setLiked(true);
 
     } else {
       alert("login to like this post");
+    }
+  }
+
+  const followUser = async () => {
+    if (check !== null && userId) {
+      const res = await newRequest.post(`api/user/user-follow/${userId}/${post.author._id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (res.data.msg == "followed user") {
+        setFollowed(true);
+      } else {
+        setFollowed(false);
+      }
+
+    } else {
+      alert("login to follow the user");
     }
   }
 
@@ -51,6 +73,9 @@ const PostPage: React.FC = () => {
       const likedBy: string[] = [];
       data.likedBy?.forEach((item: any) => likedBy.push(item._id));
       setLiked(likedBy.includes(userId));
+      setLikes(data.likes);
+      if (data.author.followers.includes(userId)) setFollowed(true)
+      else setFollowed(false)
       setPost(data);
     }).catch(e => console.log(e));
   }, [])
@@ -65,7 +90,7 @@ const PostPage: React.FC = () => {
             <div className='flex flex-col gap-2'>
               <div className='flex gap-3'>
                 <span>{post.author.name}</span>
-                <span className='cursor-pointer'>Follow</span>
+                <span className='cursor-pointer' onClick={followUser}>{followed ? "Unfollow" : "Folllow"}</span>
               </div>
 
               <div className='flex gap-3'>
@@ -76,7 +101,7 @@ const PostPage: React.FC = () => {
 
           <div className='w-[100%] flex gap-3 mt-5 items-center border-y-2 py-1 justify-between'>
             <div className='flex gap-2'>
-              <span>{liked == true ? post.likes + 1 : post.likes}</span>
+              <span>{likes}</span>
               <div className='cursor-pointer' onClick={() => likePost()}>{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}</div>
             </div>
 
