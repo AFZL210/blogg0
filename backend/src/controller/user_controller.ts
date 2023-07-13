@@ -75,13 +75,13 @@ export const validateUser = async (req: Request, res: Response, next: NextFuncti
   const { _id, token } = req.body;
   if (!token || token.length === 0) return next(createError(403, "you are not authenticated"));
 
-    else {
-        jwt.verify(token, JWT_SECRET, (err: any, payload: any) => {
-            if (payload === undefined) return next(createError(403, "invalid token"));
-            if (err) return next(createError(403, "invalid token"));
+  else {
+    jwt.verify(token, JWT_SECRET, (err: any, payload: any) => {
+      if (payload === undefined) return next(createError(403, "invalid token"));
+      if (err) return next(createError(403, "invalid token"));
 
-            if (payload._id !== _id) return next(createError(403, "invalid token"));
-            res.status(200).json({msg: "logged in"})
-        })
-    }
+      if (payload._id !== _id) return next(createError(403, "invalid token"));
+      res.status(200).json({ msg: "logged in" })
+    })
+  }
 }

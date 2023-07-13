@@ -8,20 +8,51 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
 const PostPage: React.FC = () => {
+
   const { postId } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
-  const [post, setPost] = useState<any>({});
-  const [liked, setLikes] = useState<boolean>(false);
+  const [post, setPost] = useState<any>(null);
+  const [liked, setLiked] = useState<boolean>(false);
+  let userId: any = "";
+  let token: any = "";
+  const check = localStorage.getItem("currentUser");
+  if (check !== null) {
+    userId = JSON.parse(localStorage.getItem("currentUser") || " ")?._id;
+    token = JSON.parse(localStorage.getItem("currentUser") || " ")?.token;
+  }
 
   const getPost = async () => {
-    setLikes(false);
     const postData = await newRequest.get(`/api/post/get-post/${postId}`);
-    setPost(postData.data);
+    return postData.data;
+  }
+
+  const likePost = async () => {
+    console.log("like post button clicked");
+    if (check !== null && userId) {
+
+      const res = await newRequest.post(`/api/post/like-post/${userId}/${postId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (res.data == "unliked post") setLiked(false);
+      else setLiked(true);
+
+    } else {
+      alert("login to like this post");
+    }
   }
 
   useEffect(() => {
     setLoading(true);
-    getPost().then(() => setLoading(false)).catch(e => console.log(e));
+    getPost().then((data) => {
+      setLoading(false);
+      const likedBy: string[] = [];
+      data.likedBy?.forEach((item: any) => likedBy.push(item._id));
+      setLiked(likedBy.includes(userId));
+      setPost(data);
+    }).catch(e => console.log(e));
   }, [])
 
   return (
@@ -45,8 +76,8 @@ const PostPage: React.FC = () => {
 
           <div className='w-[100%] flex gap-3 mt-5 items-center border-y-2 py-1 justify-between'>
             <div className='flex gap-2'>
-              <span>{post.likes}</span>
-              <div className='cursor-pointer'>{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}</div>
+              <span>{liked == true ? post.likes + 1 : post.likes}</span>
+              <div className='cursor-pointer' onClick={() => likePost()}>{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}</div>
             </div>
 
             <div className='flex gap-2'>
