@@ -13,6 +13,7 @@ const PostPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [post, setPost] = useState<any>(null);
   const [liked, setLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(0);
   let userId: any = "";
   let token: any = "";
   const check = localStorage.getItem("currentUser");
@@ -23,44 +24,37 @@ const PostPage: React.FC = () => {
 
   const getPost = async () => {
     const postData = await newRequest.get(`/api/post/get-post/${postId}`);
-    setPost(postData.data);
+    return postData.data;
   }
-
 
   const likePost = async () => {
     if (check !== null && userId) {
-      try {
-        const res = await newRequest.post(`/api/post/like-post/${userId}/${postId}`, {}, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        if (res.data == "liked post") setLiked(true);
-        else setLiked(false);
 
-        await getPost();
-      } catch (e) {
-        setLiked(false);
-        alert("error liking post");
-      }
+      const res = await newRequest.post(`/api/post/like-post/${userId}/${postId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const resLikes = await getPost()
+      setLikes(resLikes.likes);
+      if (res.data == "unliked post") setLiked(false);
+      else setLiked(true);
+
     } else {
-      alert("login to like the post")
+      alert("login to like this post");
     }
   }
 
   useEffect(() => {
     setLoading(true);
-    getPost().then(() => {
+    getPost().then((data) => {
       setLoading(false);
-      const likedBy = post?.likedBy;
-      let likeCheck: boolean = false;
-      likedBy.forEach((e: any) => {
-        console.log(e._id)
-        if (e._id == userId) likeCheck = true;
-      });
-
-      if (likeCheck) setLiked(true);
-      else setLiked(false);
+      const likedBy: string[] = [];
+      data.likedBy?.forEach((item: any) => likedBy.push(item._id));
+      setLiked(likedBy.includes(userId));
+      setLikes(data.likes);
+      setPost(data);
     }).catch(e => console.log(e));
   }, [])
 
@@ -85,8 +79,8 @@ const PostPage: React.FC = () => {
 
           <div className='w-[100%] flex gap-3 mt-5 items-center border-y-2 py-1 justify-between'>
             <div className='flex gap-2'>
-              <span>{post.likes}</span>
-              <div className='cursor-pointer' onClick={likePost}>{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}</div>
+              <span>{likes}</span>
+              <div className='cursor-pointer' onClick={() => likePost()}>{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}</div>
             </div>
 
             <div className='flex gap-2'>
