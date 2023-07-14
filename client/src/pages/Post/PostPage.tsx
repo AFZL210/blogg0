@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { newRequest } from '../../utils/createRequest';
 import LineWaveLoader from '../../utils/Loaders';
 import { Avatar } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
+const CLIENT_URL = import.meta.env.VITE_APP_CLIENT_URL;
 
 const PostPage: React.FC = () => {
 
   const { postId } = useParams();
+  const location = useLocation();
   const [loading, setLoading] = useState<boolean>(true);
   const [post, setPost] = useState<any>(null);
   const [liked, setLiked] = useState<boolean>(false);
@@ -107,7 +109,10 @@ const PostPage: React.FC = () => {
 
             <div className='flex gap-2'>
               <span>Share</span>
-              <div className='cursor-pointer'><ShareIcon /></div>
+              <div className='cursor-pointer' onClick={() => {
+                navigator.clipboard.writeText(`${CLIENT_URL}${location.pathname}`);
+                alert("copied link to clipboard");
+              }} ><ShareIcon /></div>
             </div>
           </div>
 
@@ -116,12 +121,12 @@ const PostPage: React.FC = () => {
             <div className='mt-5' dangerouslySetInnerHTML={{ __html: post.content }} />
           </div>
 
-          <div className='w-[100%] flex flex-col justify-start items-start my-5'>
+          {(post && post.tags.length > 0) && <div className='w-[100%] flex flex-col justify-start items-start my-5'>
             <span>Tags</span>
             <div className='flex gap-4 mt-3'>
-              {post && post?.tags?.map((tag: string) => <div className='px-2 rounded-full cursor-pointer bg-[#F4D7D7]' >{tag}</div>)}
+              {post && post?.tags?.map((tag: string) => <div key={tag} className='px-2 rounded-full bg-[#F4D7D7]' >{tag}</div>)}
             </div>
-          </div>
+          </div>}
         </div>
       }
     </div>
