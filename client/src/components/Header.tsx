@@ -62,7 +62,7 @@ const Header: React.FC = () => {
   return (
     <div className='w-[100vw] h-[3.8rem] bg-white flex items-center border-b-[1px] border-[#C9C9C9] justify-between px-5'>
       <div className='flex justify-center items-center gap-4'>
-        <Link to={'/'}><img src={logo} className='w-[2.4rem]' /></Link>
+        <Link to={'/'}><img src={logo} className='w-[24px]' /></Link>
         <SearchBox value={search} setValue={setSearch} OnSearchHandler={searchHandler} />
       </div>
       {!user.loggedIn ? <SignInBar /> : <LoggedInUserBar />}
