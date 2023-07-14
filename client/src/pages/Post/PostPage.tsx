@@ -115,6 +115,13 @@ const PostPage: React.FC = () => {
             <img src={post.cover} className='w-[100%]' />
             <div className='mt-5' dangerouslySetInnerHTML={{ __html: post.content }} />
           </div>
+
+          <div className='w-[100%] flex flex-col justify-start items-start my-5'>
+            <span>Tags</span>
+            <div className='flex gap-4 mt-3'>
+              {post && post?.tags?.map((tag: string) => <div className='px-2 rounded-full cursor-pointer bg-[#F4D7D7]' >{tag}</div>)}
+            </div>
+          </div>
         </div>
       }
     </div>
