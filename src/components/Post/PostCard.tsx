@@ -25,13 +25,13 @@ const PostCard: React.FC<PostCardType> = ({ title, author, cover, date, likes, s
       </div>
 
       <div className='w-[100%] flex justify-between'>
-        <div className='flex flex-col gap-2 w-[60%] md:w-[65vw]'>
+        <div className='flex flex-col gap-2 w-[100%] md:w-[65vw]'>
           <h1 className='font-bold text-[0.98rem]'>{title}</h1>
-          <span className='text-[0.75rem] hidden md:flex'>{trimText(summary, 250)}..</span>
+          <span className='text-[0.75rem] hidden md:flex'>{trimText(summary, 120)}..</span>
           <span className='text-[0.75rem] flex md:hidden'>{trimText(summary, 80)}...</span>
         </div>
         <div className='w-[12rem] h-[12rem] md:w-[25rem] md:h-[25rem]'>
-          <img src={cover} />
+          <img className='max-h-[70%] md:max-h-[35%]' src={cover} />
         </div>
       </div>
     </div>

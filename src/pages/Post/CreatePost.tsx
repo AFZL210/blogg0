@@ -45,7 +45,7 @@ const CreatePost: React.FC = () => {
         if (file !== null) {
             const resData = await upload(file);
             const cover = resData.data.url;
-            const newPost = { title, summary, content, cover, tags: [] };
+            const newPost = { title, summary, content, cover, tags: tags };
             const res = await newRequest.post(`/api/post/new-post/${id}`, newPost, {
                 headers: {
                     Authorization: `Bearer ${user.token}`
