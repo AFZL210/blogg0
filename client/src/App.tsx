@@ -7,6 +7,7 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import PostPage from './pages/Post/PostPage';
 import CreatePost from './pages/Post/CreatePost';
+import SearchResult from './pages/SearchResult';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path='create-account' element={<Register />} />
         <Route path='/post/:postId' element={<PostPage />} />
         <Route path='/create-new-post' element={<CreatePost />} />
+        <Route path='/search/:query' element={<SearchResult />} />
         <Route path='*' element={<PageNotFound />} />
       </Route>
     </Routes>

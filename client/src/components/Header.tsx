@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import UserMenuCard from './settings/UserMenuCard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../main';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,9 @@ import { login, logout } from '../features/userReducer';
 import { newRequest } from '../utils/createRequest';
 
 const Header: React.FC = () => {
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.value);
   const [search, setSearch] = useState<string>("");
 
@@ -53,6 +55,7 @@ const Header: React.FC = () => {
 
   const searchHandler = (): void => {
     if (search.length > 0) {
+      navigate(`/search/${search}`);
       setSearch("");
     } else {
       console.log("empty seach box");

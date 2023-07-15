@@ -25,8 +25,7 @@ const Home: React.FC = () => {
     getUser().then(d => {
       const follows = d.follows;
       follows.forEach((item: any) => {
-        setFollowPosts([...followPosts, item])
-        console.log(followPosts)
+        setFollowPosts([...followPosts, item]);
       })
     })
 
