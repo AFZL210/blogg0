@@ -1,8 +1,34 @@
-# blogg0
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-[Screencast from 15-07-23 01:42:30 PM IST.webm](https://github.com/AFZL210/blogg0/assets/79896602/1ca7939a-1300-4c0a-8e76-abb2b0f4c3d4)
+## Getting Started
 
+First, run the development server:
 
-![Screenshot from 2023-06-23 14-33-11](https://github.com/AFZL210/blogg0/assets/79896602/cc168fde-6fbe-4543-a8f4-a6adab30fe0e)
-![Screenshot from 2023-06-23 14-37-12](https://github.com/AFZL210/blogg0/assets/79896602/c28509ca-2573-4dad-8f77-82b1090ba6a2)
-![Screenshot from 2023-06-23 14-36-56](https://github.com/AFZL210/blogg0/assets/79896602/37fdb149-349c-4691-83e1-ba823ac12a92)
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
